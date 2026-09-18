@@ -1,0 +1,43 @@
+---
+import Header from '../components/Header.astro';
+import HeroCarousel from '../components/HeroCarousel.astro';
+import '../styles/global.css';
+
+const pageTitle = "IImery | Discover Powerful Tech & Exclusive Deals";
+const pageDescription = "Explore in-depth technology reviews, verified cloud infrastructure benchmarks, and exclusive software deals curated with editorial excellence.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href="https://itsilmery.com" />
+    
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content="https://itsilmery.com" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts Preconnect for Zero Latency -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Product+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <!-- Google Inspired Minimal Header -->
+    <Header brandName="IImery" />
+
+    <!-- Main Content Area -->
+    <main>
+      <!-- Hero Section with Peek Carousel (10 Posts) -->
+      <HeroCarousel />
+    </main>
+  </body>
+</html>

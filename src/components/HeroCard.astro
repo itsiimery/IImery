@@ -1,0 +1,382 @@
+---
+import type { HeroPost } from '../types';
+
+interface Props {
+  post: HeroPost;
+  index: number;
+}
+
+const { post, index } = Astro.props;
+---
+
+<article class="hero-card" data-post-index={index}>
+  <!-- Desktop Left / Mobile Bottom Content -->
+  <div class="card-content-pane">
+    <div class="card-top-meta">
+      <span class="topic-chip">{post.tag}</span>
+      {post.badgeText && <span class="badge-tag">{post.badgeText}</span>}
+    </div>
+
+    <h2 class="card-headline">
+      <a href={post.readMoreUrl} class="headline-link">
+        {post.title}
+      </a>
+    </h2>
+
+    <p class="card-excerpt">
+      {post.excerpt}
+    </p>
+
+    <div class="card-bottom-bar">
+      <div class="author-block">
+        <span class="author-name">By {post.author.name}</span>
+        <span class="author-role">{post.author.role}</span>
+      </div>
+
+      <a href={post.readMoreUrl} class="read-more-link" aria-label={`Read more about ${post.title}`}>
+        <span>Read more</span>
+        <span class="read-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Desktop Right / Mobile Top Visual Graphic Container -->
+  <div class="card-visual-pane" style={`background: ${post.bgGradient};`}>
+    <div class="graphic-frame">
+      {post.graphicType === 'gemini' && (
+        <div class="gemini-star-wrapper">
+          <svg class="gemini-star-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 0C50 27.614 27.614 50 0 50C27.614 50 50 72.386 50 100C50 72.386 72.386 50 100 50C72.386 50 50 27.614 50 0Z" fill="url(#gemini_grad)" />
+            <defs>
+              <linearGradient id="gemini_grad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#4285F4" />
+                <stop offset="35%" stop-color="#9B72CB" />
+                <stop offset="70%" stop-color="#D96570" />
+                <stop offset="100%" stop-color="#F29900" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      )}
+
+      {post.graphicType === 'ai-tools' && (
+        <div class="graphic-badge-art">
+          <div class="pulse-ring"></div>
+          <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="#137333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path>
+            <path d="M12 6v6l4 2"></path>
+          </svg>
+        </div>
+      )}
+
+      {post.graphicType === 'cloud' && (
+        <div class="graphic-badge-art">
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#185ABC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+          </svg>
+        </div>
+      )}
+
+      {post.graphicType === 'analytics' && (
+        <div class="graphic-badge-art">
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#EA4335" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 20V10M12 20V4M6 20v-6"></path>
+          </svg>
+        </div>
+      )}
+
+      {post.graphicType === 'database' && (
+        <div class="graphic-badge-art">
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#9334E8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+        </div>
+      )}
+
+      {post.graphicType === 'performance' && (
+        <div class="graphic-badge-art">
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#12B5CB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+      )}
+
+      {post.graphicType === 'growth' && (
+        <div class="graphic-badge-art">
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#F29900" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+            <polyline points="16 7 22 7 22 13"></polyline>
+          </svg>
+        </div>
+      )}
+
+      {post.graphicType === 'workflow' && (
+        <div class="graphic-badge-art">
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#0070F3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+        </div>
+      )}
+
+      {post.graphicType === 'automation' && (
+        <div class="graphic-badge-art">
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#0F9D58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </div>
+      )}
+
+      {post.graphicType === 'security' && (
+        <div class="graphic-badge-art">
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#5F6368" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .hero-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    background-color: var(--color-surface-card);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    width: 100%;
+    min-height: 460px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .hero-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+  }
+
+  /* Left Content Column */
+  .card-content-pane {
+    flex: 1.15;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 44px 44px 38px 44px;
+    z-index: 2;
+  }
+
+  .card-top-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .topic-chip {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.1px;
+  }
+
+  .badge-tag {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    background-color: rgba(26, 115, 232, 0.12);
+    color: var(--color-google-blue);
+  }
+
+  .card-headline {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.22;
+    letter-spacing: -0.6px;
+    color: var(--color-text-primary);
+    margin-bottom: 18px;
+  }
+
+  .headline-link {
+    color: inherit;
+    transition: color var(--transition-fast);
+  }
+
+  .headline-link:hover {
+    color: var(--color-google-blue);
+  }
+
+  .card-excerpt {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    margin-bottom: 32px;
+    max-width: 540px;
+  }
+
+  .card-bottom-bar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .author-block {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .author-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .author-role {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-text-muted);
+  }
+
+  .read-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-google-blue);
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .read-more-link:hover {
+    background-color: var(--color-google-blue);
+    color: #FFFFFF;
+    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
+    transform: translateX(2px);
+  }
+
+  .read-arrow {
+    transition: transform var(--transition-fast);
+  }
+
+  .read-more-link:hover .read-arrow {
+    transform: translateX(3px);
+  }
+
+  /* Right Visual Column */
+  .card-visual-pane {
+    flex: 0.95;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .graphic-frame {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-visual);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    padding: 40px;
+    transition: transform var(--transition-smooth);
+  }
+
+  .hero-card:hover .graphic-frame {
+    transform: scale(1.02);
+  }
+
+  .gemini-star-wrapper {
+    width: 130px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: gentle-float 6s ease-in-out infinite alternate;
+  }
+
+  .gemini-star-icon {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 6px 16px rgba(66, 133, 244, 0.25));
+  }
+
+  .graphic-badge-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  @keyframes gentle-float {
+    0% {
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      transform: translateY(-6px) scale(1.03);
+    }
+  }
+
+  /* Mobile Responsive Vertical Stack */
+  @media (max-width: 900px) {
+    .hero-card {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .card-visual-pane {
+      order: 1;
+      height: 240px;
+      padding: 24px;
+    }
+
+    .card-content-pane {
+      order: 2;
+      padding: 28px 24px 24px 24px;
+    }
+
+    .card-headline {
+      font-size: 26px;
+      margin-bottom: 14px;
+    }
+
+    .card-excerpt {
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .card-bottom-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .read-more-link {
+      width: 100%;
+      justify-content: center;
+      padding: 10px 20px;
+      background-color: transparent;
+      border: 1px solid var(--color-google-blue);
+    }
+  }
+</style>

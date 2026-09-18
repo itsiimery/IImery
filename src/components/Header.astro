@@ -1,0 +1,572 @@
+---
+interface Props {
+  brandName?: string;
+}
+
+const { brandName = 'Ilmery' } = Astro.props;
+
+const NAV_LINKS = [
+  { label: 'Deals & Promo', href: '/deals' },
+  { label: 'About Us', href: '/about' },
+  { label: 'Contact Us', href: '/contact' },
+] as const;
+---
+
+<header class="header-root">
+  <div class="container header-container">
+    
+    <!-- Mobile Hamburger Button (Left on Mobile) -->
+    <button type="button" class="mobile-menu-btn" id="mobileMenuOpenBtn" aria-label="Open navigation menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- Brand Logo (Google Sans Bold) -->
+    <a href="/" class="brand-logo" aria-label="Ilmery Homepage">
+      <span class="logo-text">{brandName}</span>
+    </a>
+
+    <!-- Desktop Navigation Links (Hidden when search expands) -->
+    <nav class="desktop-nav" id="desktopNav" aria-label="Main Navigation">
+      <ul class="nav-list">
+        {NAV_LINKS.map((link) => (
+          <li class="nav-item">
+            <a href={link.href} class="nav-link">
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Expandable Search Overlay (Covers middle between Logo and Get Started) -->
+    <div class="expandable-search-wrapper" id="expandableSearchWrapper">
+      <div class="search-inner-box">
+        <span class="search-inner-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </span>
+        <input 
+          type="search" 
+          id="headerSearchInput" 
+          class="search-input" 
+          placeholder="Search articles, reviews, deals..." 
+          autocomplete="off"
+        />
+        <button type="button" class="search-close-btn" id="searchCloseBtn" aria-label="Close search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Header Controls -->
+    <div class="header-actions">
+      <!-- Search Trigger Icon Button -->
+      <button type="button" class="icon-btn search-trigger-btn" id="searchTriggerBtn" aria-label="Open Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+
+      <!-- Desktop Get Started Pill Button (Exact Google Blue) -->
+      <a href="/get-started" class="get-started-btn desktop-only">
+        Get Started
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Mobile Drawer Menu Overlay -->
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="drawer-content">
+      
+      <!-- Drawer Top Bar -->
+      <div class="drawer-top-bar">
+        <button type="button" class="icon-btn drawer-close-btn" id="drawerCloseBtn" aria-label="Close menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="/" class="drawer-logo">{brandName}</a>
+
+        <button type="button" class="icon-btn drawer-search-btn" id="drawerSearchBtn" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Drawer Nav List -->
+      <nav class="drawer-nav">
+        <ul class="drawer-nav-list">
+          {NAV_LINKS.map((link) => (
+            <li class="drawer-nav-item">
+              <a href={link.href} class="drawer-nav-link">
+                <span>{link.label}</span>
+                <span class="arrow-icon">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Drawer Bottom Actions with Decorative Google Circle -->
+      <div class="drawer-footer">
+        <div class="decorative-circle" aria-hidden="true"></div>
+        <a href="/get-started" class="get-started-btn drawer-cta-btn">
+          Get Started
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<style>
+  .header-root {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border-subtle);
+    height: 72px;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    height: 100%;
+  }
+
+  /* Logo */
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+    transition: opacity var(--transition-fast);
+  }
+
+  .logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--color-text-primary);
+  }
+
+  /* Desktop Navigation */
+  .desktop-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+    padding: 8px 4px;
+    position: relative;
+  }
+
+  .nav-link:hover {
+    color: var(--color-google-blue);
+  }
+
+  /* Expandable Search Bar */
+  .expandable-search-wrapper {
+    position: absolute;
+    left: 140px;
+    right: 170px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+    z-index: 20;
+  }
+
+  .expandable-search-wrapper.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .desktop-nav.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .search-inner-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: var(--color-surface-hover);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: 0 16px;
+    height: 46px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .search-inner-box:focus-within {
+    border-color: var(--color-google-blue);
+    background-color: var(--color-surface);
+    box-shadow: 0 0 0 3px var(--color-google-blue-light);
+  }
+
+  .search-inner-icon {
+    display: flex;
+    align-items: center;
+    color: var(--color-text-muted);
+    margin-right: 12px;
+  }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-primary);
+    font-size: 15px;
+    color: var(--color-text-primary);
+  }
+
+  .search-input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .search-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    color: var(--color-text-muted);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .search-close-btn:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: var(--color-text-primary);
+  }
+
+  /* Right Actions */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 10;
+  }
+
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-full);
+    color: var(--color-text-secondary);
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .icon-btn:hover {
+    background-color: var(--color-surface-hover);
+    color: var(--color-text-primary);
+  }
+
+  .icon-btn:active {
+    transform: scale(0.94);
+  }
+
+  /* Get Started Pill Button */
+  .get-started-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    padding: 0 24px;
+    background-color: var(--color-google-blue);
+    color: #FFFFFF !important;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    border-radius: var(--radius-full);
+    transition: background-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+    box-shadow: 0 1px 2px rgba(26, 115, 232, 0.2);
+  }
+
+  .get-started-btn:hover {
+    background-color: var(--color-google-blue-hover);
+    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.35);
+  }
+
+  .get-started-btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Mobile Elements */
+  .mobile-menu-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: var(--color-text-primary);
+    border-radius: var(--radius-full);
+  }
+
+  .desktop-only {
+    display: inline-flex;
+  }
+
+  /* Mobile Drawer */
+  .mobile-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 200;
+    display: none;
+  }
+
+  .mobile-drawer.is-active {
+    display: block;
+  }
+
+  .drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity var(--transition-smooth);
+  }
+
+  .mobile-drawer.is-active .drawer-backdrop {
+    opacity: 1;
+  }
+
+  .drawer-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 85%;
+    max-width: 360px;
+    height: 100%;
+    background-color: var(--color-surface);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform var(--transition-spring);
+    overflow: hidden;
+  }
+
+  .mobile-drawer.is-active .drawer-content {
+    transform: translateX(0);
+  }
+
+  .drawer-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .drawer-logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  .drawer-nav {
+    flex: 1;
+    padding: 24px 20px;
+    overflow-y: auto;
+  }
+
+  .drawer-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .drawer-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    border-radius: 12px;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .drawer-nav-link:hover, .drawer-nav-link:active {
+    background-color: var(--color-surface-hover);
+    color: var(--color-google-blue);
+  }
+
+  .arrow-icon {
+    font-size: 18px;
+    color: var(--color-text-muted);
+  }
+
+  .drawer-footer {
+    position: relative;
+    padding: 24px 20px 32px 20px;
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .decorative-circle {
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 110px;
+    height: 110px;
+    background-color: #E8F0FE;
+    border-radius: 50%;
+    z-index: 0;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .drawer-cta-btn {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 48px;
+    font-size: 15px;
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 900px) {
+    .desktop-nav {
+      display: none;
+    }
+
+    .desktop-only {
+      display: none;
+    }
+
+    .mobile-menu-btn {
+      display: flex;
+    }
+
+    .expandable-search-wrapper {
+      left: 60px;
+      right: 60px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .expandable-search-wrapper {
+      left: 16px;
+      right: 16px;
+    }
+  }
+</style>
+
+<script>
+  function setupHeader() {
+    // Search elements
+    const searchTrigger = document.getElementById('searchTriggerBtn');
+    const searchWrapper = document.getElementById('expandableSearchWrapper');
+    const searchClose = document.getElementById('searchCloseBtn');
+    const searchInput = document.getElementById('headerSearchInput') as HTMLInputElement | null;
+    const desktopNav = document.getElementById('desktopNav');
+
+    // Mobile Drawer elements
+    const mobileMenuOpen = document.getElementById('mobileMenuOpenBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerClose = document.getElementById('drawerCloseBtn');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    const drawerSearch = document.getElementById('drawerSearchBtn');
+
+    // Open Search
+    searchTrigger?.addEventListener('click', () => {
+      searchWrapper?.classList.add('is-open');
+      desktopNav?.classList.add('is-hidden');
+      searchInput?.focus();
+    });
+
+    // Close Search
+    const closeSearch = () => {
+      searchWrapper?.classList.remove('is-open');
+      desktopNav?.classList.remove('is-hidden');
+      if (searchInput) searchInput.value = '';
+    };
+
+    searchClose?.addEventListener('click', closeSearch);
+
+    // Escape key closes search & drawer
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeSearch();
+        closeMobileDrawer();
+      }
+    });
+
+    // Mobile Drawer Open
+    mobileMenuOpen?.addEventListener('click', () => {
+      mobileDrawer?.classList.add('is-active');
+      mobileDrawer?.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Mobile Drawer Close
+    const closeMobileDrawer = () => {
+      mobileDrawer?.classList.remove('is-active');
+      mobileDrawer?.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    drawerClose?.addEventListener('click', closeMobileDrawer);
+    drawerBackdrop?.addEventListener('click', closeMobileDrawer);
+
+    // Mobile Drawer Search click opens search
+    drawerSearch?.addEventListener('click', () => {
+      closeMobileDrawer();
+      searchTrigger?.click();
+    });
+  }
+
+  // Setup on initial load and view transitions
+  setupHeader();
+  document.addEventListener('astro:after-swap', setupHeader);
+</script>
